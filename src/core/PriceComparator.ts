@@ -243,7 +243,7 @@ export class PriceComparator {
     logger.info(`Searching for product "${productName}" on brand website ${website}`);
     
     // Look for links that contain product-related text
-    $('a[href*="/product"], a[href*="/item"], a[href*="/shop"], a[href*="/buy"], a[href*="/store"], a[href*="/catalog"]').each((index: number, element: cheerio.Element) => {
+    $('a[href*="/product"], a[href*="/item"], a[href*="/shop"], a[href*="/buy"], a[href*="/store"], a[href*="/catalog"]').each((index: number, element: any) => {
       if (index >= 15) return; // Limit results
       
       const $el = $(element);
@@ -262,7 +262,7 @@ export class PriceComparator {
     });
     
     // Also look for product mentions in the page content
-    $('h1, h2, h3, h4, .title, .product-title, .name, .product-name, .item-title').each((index: number, element: cheerio.Element) => {
+    $('h1, h2, h3, h4, .title, .product-title, .name, .product-name, .item-title').each((index: number, element: any) => {
       if (index >= 10) return;
       
       const $el = $(element);
@@ -284,7 +284,7 @@ export class PriceComparator {
     });
     
     // Look for product mentions in text content and find nearby links
-    $('p, div, span').each((index: number, element: cheerio.Element) => {
+    $('p, div, span').each((index: number, element: any) => {
       if (index >= 50) return; // Limit to avoid too much processing
       
       const $el = $(element);
@@ -476,7 +476,7 @@ export class PriceComparator {
       const urls: string[] = [];
 
       // Extract URLs from DuckDuckGo search results - focus on organic results, skip ads
-      $('.result__a, .result__url, .result__title a, .result__snippet a').each((index: number, element: cheerio.Element) => {
+      $('.result__a, .result__url, .result__title a, .result__snippet a').each((index: number, element: any) => {
         const href = $(element).attr('href');
         if (href) {
           // Skip ad/sponsored links
@@ -519,7 +519,7 @@ export class PriceComparator {
       const urls: string[] = [];
 
       // Extract URLs from Bing search results - look for actual product links
-      $('h2 a, .b_algo a, .b_title a, .b_caption a').each((index: number, element: cheerio.Element) => {
+      $('h2 a, .b_algo a, .b_title a, .b_caption a').each((index: number, element: any) => {
         const href = $(element).attr('href');
         if (href) {
           // Bing uses redirect URLs, we need to extract the actual URL
@@ -614,7 +614,7 @@ export class PriceComparator {
       const urls: string[] = [];
 
       // Extract URLs from Google search results - look for organic results
-      $('h3 a, .g a, [data-ved] a, .yuRUbf a, .rc a, .LC20lb a').each((index: number, element: cheerio.Element) => {
+      $('h3 a, .g a, [data-ved] a, .yuRUbf a, .rc a, .LC20lb a').each((index: number, element: any) => {
         const href = $(element).attr('href');
         if (href) {
           // Clean the URL (remove Google redirects)
@@ -976,7 +976,7 @@ export class PriceComparator {
   }
 
   private parseAmazonResults($: cheerio.CheerioAPI, website: string, countryConfig: any, results: PriceResult[]): void {
-    $('[data-component-type="s-search-result"]').each((index: number, element: cheerio.Element) => {
+    $('[data-component-type="s-search-result"]').each((index: number, element: any) => {
       if (index >= 10) return; // Limit results
 
       const $el = $(element);
@@ -1014,7 +1014,7 @@ export class PriceComparator {
   }
 
   private parseWalmartResults($: cheerio.CheerioAPI, website: string, countryConfig: any, results: PriceResult[]): void {
-    $('[data-item-id]').each((index: number, element: cheerio.Element) => {
+    $('[data-item-id]').each((index: number, element: any) => {
       if (index >= 10) return;
 
       const $el = $(element);
@@ -1048,7 +1048,7 @@ export class PriceComparator {
   }
 
   private parseFlipkartResults($: cheerio.CheerioAPI, website: string, countryConfig: any, results: PriceResult[]): void {
-    $('[data-tkid]').each((index: number, element: cheerio.Element) => {
+    $('[data-tkid]').each((index: number, element: any) => {
       if (index >= 10) return;
 
       const $el = $(element);
@@ -1084,7 +1084,7 @@ export class PriceComparator {
   }
 
   private parseEbayResults($: cheerio.CheerioAPI, website: string, countryConfig: any, results: PriceResult[]): void {
-    $('.s-item').each((index: number, element: cheerio.Element) => {
+    $('.s-item').each((index: number, element: any) => {
       if (index >= 10) return;
 
       const $el = $(element);
@@ -1139,7 +1139,7 @@ export class PriceComparator {
 
   private parseGenericResults($: cheerio.CheerioAPI, website: string, countryConfig: any, results: PriceResult[]): void {
     // Generic parsing for unknown websites
-    $('a[href*="/product"], a[href*="/item"], .product, .item').each((index: number, element: cheerio.Element) => {
+    $('a[href*="/product"], a[href*="/item"], .product, .item').each((index: number, element: any) => {
       if (index >= 5) return;
 
       const $el = $(element);
